@@ -22,6 +22,16 @@
 		<Addin id="SourceEditor2" version="2.6"/>
   </Dependencies>
 
+	<Extension path="/MonoDevelop/Core/SupportPackages">
+		<Package name="fsharp" version="1.0" clrVersion="Default">
+			<Assembly file="FSharp.Compiler.dll" />
+			<Assembly file="FSharp.Compiler.Server.Shared.dll" />
+			<Assembly file="FSharp.Build.dll" />
+			<Assembly file="FSharp.Compiler.Interactive.Settings.dll" />
+			<Assembly file="FSharp.Core.dll" />
+		</Package>
+	</Extension>
+	
 	<Extension path="/MonoDevelop/ProjectModel/MSBuildItemTypes">
 		<DotNetProject language="F#" extension="fsproj" 
 			guid="{4925A630-B079-445d-BCD4-3A9C94FE9307}" 
@@ -75,9 +85,9 @@
     </Condition>
   </Extension>
 
-  <Extension path = "/MonoDevelop/ProjectModel/Gui/ItemOptionPanels/Build/General">
+  <Extension path = "/MonoDevelop/ProjectModel/Gui/ItemOptionPanels/Build">
     <Condition id="ActiveLanguage" value="F#">
-      <Panel id = "FSharpBuildOrderPanel" _label = "General" class = "FSharp.MonoDevelop.BuildOrderPanel"/>
+      <Section id = "FSharpBuildOrderPanel" _label = "Build Order" class = "FSharp.MonoDevelop.BuildOrderPanel" insertafter="General"/>
     </Condition>
   </Extension>
   
