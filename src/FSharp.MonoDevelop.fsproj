@@ -48,10 +48,12 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <GenerateDebugInfo>false</GenerateDebugInfo>
+    <GenerateDebugInfo>true</GenerateDebugInfo>
     <OptimizeCode>false</OptimizeCode>
     <GenerateXmlDoc>false</GenerateXmlDoc>
     <GenerateTailCalls>false</GenerateTailCalls>
+    <DefinedSymbols />
+    <CustomCommandLine />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

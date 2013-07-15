@@ -41,11 +41,12 @@ type FSharpLanguageBinding() =
     timerHandle <- 0u
   
   // Register handler that will enable/disable timer when F# file is opened/closed
-  do IdeApp.Workbench.ActiveDocumentChanged.Add(fun _ ->
-    let doc = IdeApp.Workbench.ActiveDocument
-    removeIdleTimer()
-    if doc <> null && (Common.supportedExtension(IO.Path.GetExtension(doc.FileName.ToString()))) then
-      createIdleTimer() )
+  do if IdeApp.IsInitialized then
+       IdeApp.Workbench.ActiveDocumentChanged.Add(fun _ ->
+         let doc = IdeApp.Workbench.ActiveDocument
+         removeIdleTimer()
+         if doc <> null && (Common.supportedExtension(IO.Path.GetExtension(doc.FileName.ToString()))) then
+           createIdleTimer() )
   
   
   // ------------------------------------------------------------------------------------
@@ -81,8 +82,5 @@ type FSharpLanguageBinding() =
       
     member x.GetSupportedClrVersions() =
       [| ClrVersion.Net_2_0; ClrVersion.Net_4_0 |]
-
-    member x.GetImplicitAssemblyReferences() =
-      Seq.singleton (AddinManager.CurrentAddin.GetFilePath("FSharp.Core.dll"))
 
     member x.ProjectStockIcon = "md-fs-project"

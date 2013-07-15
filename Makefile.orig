@@ -12,6 +12,7 @@ PANGODIR = INSERT_PANGO_DIR
 GTKDIR = INSERT_GTK_DIR
 GDKDIR = INSERT_GDK_DIR
 GLIBDIR = INSERT_GLIB_DIR
+MONOADDINSDIR = INSERT_MONO_ADDINS_DIR
 MONO = INSERT_MONO
 MDRUN = $(MONO) $(MDROOT)/bin/mdrun.exe
 
@@ -54,14 +55,19 @@ FILES = \
 	src/FSharpLanguageBinding.fs \
 	src/FSharpParser.fs \
 	src/FSharpTextEditorCompletion.fs \
-	src/FSharpResolverProvider.fs
+	src/FSharpResolverProvider.fs \
+	src/FSharpProjectServiceExtension.fs \
+	src/FSharpProjectFileNodeExtension.fs
 
 REFERENCES = \
 	-r:$(MONOBIN)/mscorlib.dll \
 	-r:System.dll -r:System.Xml.dll \
+	-r:$(MONOBIN)/Mono.Cairo.dll \
+	-r:$(MONOBIN)/Mono.Posix.dll \
 	-r:$(MDBIN)/MonoDevelop.Core.dll \
 	-r:$(MDBIN)/MonoDevelop.Ide.dll \
 	-r:$(MDBIN)/Mono.TextEditor.dll \
+	-r:$(MONOADDINSDIR)/Mono.Addins.dll \
 	-r:$(FSBIN)/FSharp.Core.dll \
 	-r:$(FSBIN)/FSharp.Compiler.dll \
 	-r:$(FSBIN)/FSharp.Compiler.Interactive.Settings.dll \

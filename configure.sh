@@ -28,9 +28,9 @@ read a
 # ------------------------------------------------------------------------------
 # Parse command line arguments and specify default values
 
-GMCS=gmcs
+GMCS=dmcs
 MONO=mono
-FSC=fsharpc
+FSC=fsc
  
 while getopts e:f:c:n OPT; do
   case "$OPT" in
@@ -80,12 +80,12 @@ searchpaths "MonoDevelop" bin/MonoDevelop.Core.dll PATHS[@]
 MDDIR=$RESULT
 echo "Successfully found MonoDevelop root directory."
 
-PATHS=( /usr/lib/fsharp /usr/local/lib/fsharp )
+PATHS=( /usr/lib/fsharp /usr/local/lib/fsharp /usr/lib/mono/4.0 )
 searchpaths "F#" FSharp.Core.dll PATHS[@]
 FSDIR=$RESULT
 echo "Successfully found F# root directory."
 
-PATHS=( /usr/lib/mono/2.0 /Library/Frameworks/Mono.framework/Versions/2.8/lib/mono/2.0 )
+PATHS=( /usr/lib/mono/4.0 /Library/Frameworks/Mono.framework/Versions/2.8/lib/mono/4.0 )
 searchpaths "Mono" mscorlib.dll PATHS[@]
 MONODIR=$RESULT
 echo "Successfully found Mono root directory."
@@ -115,6 +115,11 @@ searchpaths "Pango#" pango-sharp.dll PATHS[@]
 PANGODIR=$RESULT
 echo "Successfully found Pango root directory."
 
+PATHS=( /usr/lib/mono/mono-addins /usr/lib/cli/mono-addins /Library/Frameworks/Mono.framework/Versions/2.8/lib/mono/mono-addins )
+searchpaths "Mono.Addins" Mono.Addins.dll PATHS[@]
+MONOADDINSDIR=$RESULT
+echo "Successfully found Mono.Addins root directory."
+
 # ------------------------------------------------------------------------------
 # Write Makefile
 
@@ -127,8 +132,9 @@ sed "s,INSERT_GLIB_DIR,$GLIBDIR,g" Makefile.1 > Makefile.2
 sed "s,INSERT_GDK_DIR,$GDKDIR,g" Makefile.2 > Makefile.1
 sed "s,INSERT_FSHARP_BIN,$FSDIR,g" Makefile.1 > Makefile.2
 sed "s,INSERT_PANGO_DIR,$PANGODIR,g" Makefile.2 > Makefile.1
-sed "s,INSERT_MONO,$MONO,g" Makefile.1 > Makefile.2
-sed "s,INSERT_FSHARP_COMPILER,$FSC,g" Makefile.2 > Makefile.1
-sed "s,INSERT_CSHARP_COMPILER,$GMCS,g" Makefile.1 > Makefile.2
-rm Makefile.1
-mv Makefile.2 Makefile
+sed "s,INSERT_MONO_ADDINS_DIR,$MONOADDINSDIR,g" Makefile.1 > Makefile.2
+sed "s,INSERT_MONO,$MONO,g" Makefile.2 > Makefile.1
+sed "s,INSERT_FSHARP_COMPILER,$FSC,g" Makefile.1 > Makefile.2
+sed "s,INSERT_CSHARP_COMPILER,$GMCS,g" Makefile.2 > Makefile.1
+rm Makefile.2
+mv Makefile.1 Makefile
